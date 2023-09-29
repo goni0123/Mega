@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="MegaNew.Views.Outgoing"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MegaNew.Views"
+             mc:Ignorable="d"
+             Height="1000" Width="1690" Background="Snow">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Search" FontSize="15" Grid.Row="0" Margin="680 10 960 10"/>
+
+        <TextBox x:Name="search" Grid.Row="0" Margin="10" Width="200" Height="30" VerticalAlignment="Top" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Button x:Name="Add" Grid.Row="0" Margin="1600,10,0,10" Width="80" Content="Add" Command="{Binding AddCommand}" CommandParameter="{Binding ElementName=nalog, Path=Text}" HorizontalAlignment="Left" Click="Add_Click" />
+
+        <DataGrid x:Name="NalogData" Grid.Row="1" Margin="10,10,10,55" AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding OutgoingData}" Grid.RowSpan="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nalog" Binding="{Binding NalogNr}" Width="Auto" />
+                <DataGridTextColumn Header="Truck" Binding="{Binding Truck}" Width="Auto" />
+                <DataGridTextColumn Header="RIT" Binding="{Binding Rit}" Width="Auto" />
+                <DataGridTextColumn Header="Invoice" Binding="{Binding Invoice}" Width="Auto" />
+                <DataGridTextColumn Header="Driver" Binding="{Binding Driver}" Width="Auto" />
+
+                <DataGridCheckBoxColumn Header="Check" Binding="{Binding Check}" Width="Auto" />
+                <DataGridTemplateColumn Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Update" Click="btnUpdate_Click" Tag="{Binding NalogNr}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Delete" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding NalogNr}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Print" Command="{Binding DataContext.PrintCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding NalogNr}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock Text="Nalog" FontSize="15" Grid.Row="0" Margin="1330,10,310,10"/>
+        <TextBox x:Name="nalog" Margin="1395,0,95,0" Width="200" Height="30" VerticalAlignment="Center"/>
+    </Grid>
+</UserControl>
